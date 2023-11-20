@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  db:
+    image: elestio/postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: passit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+    ports:
+      - 172.17.0.1:61925:5432
+  web:
+    image: passit/passit:stable
+    command: bin/start.sh
+    ports:
+      - "172.17.0.1:50911:8080"
+    environment:
+      DATABASE_URL: postgres://postgres:${DB_PASSWORD}@db:5432/passit
+      SECRET_KEY: ${SECRET_KEY}
+      IS_DEBUG: "False"
+      EMAIL_URL: smtp://172.17.0.1:25/?skip_ssl_verify=true&legacy_ssl=false&smtp_ssl_enabled=false&disable_starttls=true
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_CONFIRMATION_HOST: "https://${DOMAIN}"
+
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${ADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: 8080
+    ports:
+      - "172.17.0.1:57890:8080"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
