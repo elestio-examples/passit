@@ -6,3 +6,4 @@ echo "Waiting for software to be ready ..."
 sleep 60s;
 
 
+docker-compose exec -T web bash -c "./manage.py migrate"

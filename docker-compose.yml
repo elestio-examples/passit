@@ -15,6 +15,7 @@ services:
       - 172.17.0.1:61925:5432
   web:
     image: passit/passit:stable
+    restart: always
     command: bin/start.sh
     ports:
       - "172.17.0.1:50911:8080"
