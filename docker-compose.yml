@@ -28,7 +28,7 @@ services:
       EMAIL_CONFIRMATION_HOST: "https://${DOMAIN}"
 
   pgadmin4:
-    image: dpage/pgadmin4:latest
+    image: elestio/pgadmin:latest
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${ADMIN_EMAIL}
