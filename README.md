@@ -22,4 +22,4 @@ You can open pgAdmin web UI here:
 
 # First use
 
-You will need to register in order to receive your confirmation code by email and also to be able to download your Backup Code
+You will need to register at https://[CI_CD_DOMAIN]/account/register to receive your confirmation code by email and also to be able to download your Backup Code
